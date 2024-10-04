@@ -12,6 +12,10 @@ function noClick(){
 function bAlert(){
     alert("tonto")
 }
+function colorRojo() {
+    let misClases = document.getElementsByClassName("f")
+    misClases[0].classList.add('rojo')
+}
 
 document.addEventListener("DOMContentLoaded", () => {
     //console.log("dom cargado")
@@ -22,4 +26,17 @@ document.addEventListener("DOMContentLoaded", () => {
     bnoClick.addEventListener('click', noClick)
 
     document.getElementById("noAlert").addEventListener('click', bAlert)
+
+    let misClases = document.getElementsByClassName("f")
+    console.log(misClases)
+
+    misClases[2].classList.add('negrita')
+    misClases[3].classList.remove("f")
+
+    for (let index = 0; index < misClases.length; index++) {
+        misClases[index].classList.add("hola")
+        
+    }
+    document.getElementById("color").addEventListener('click', colorRojo)
+
 })
