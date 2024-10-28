@@ -1,0 +1,13 @@
+/* Contenedor principal */
+#contenedor {
+    display: flex;
+    justify-content: center; /* Centra los elementos horizontalmente */
+    align-items: center; /* Centra los elementos verticalmente */
+    gap: 20px; /* Espacio entre los divs */
+}
+
+/* Estilos de los divs */
+#div1, #div2{
+    background-color: #eb4747; /* Color de fondo */
+    border: 3px solid #0e0101; /* Borde */    
+}

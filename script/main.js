@@ -1,11 +1,11 @@
-console.log("mi primer XD")
+console.log("mi primer XD ")
 //alert("tonto")
 function miBoton(){
     console.error("boton clickado")
     console.warn("boton clickado")
 }
 
-function noClick(){
+function noClick(){ 
     console.log("rrr")
 }
 
