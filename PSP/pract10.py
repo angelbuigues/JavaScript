@@ -10,7 +10,7 @@ def add_note(note):
         note = float(note)
         if 0 <= note <= 100:
             grades.append(note)
-            print("Añadida correctamente la nota: ", grade[len(grades) - 1])
+            print("Añadida correctamente la nota: ", grades[(len(grades)) - 1])
         else:
             print("No está entre 0 y 100.")
     except:

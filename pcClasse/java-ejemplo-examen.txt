@@ -1,0 +1,304 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+package com.mycompany.mavenproject1;
+
+
+import java.io.*;
+import java.util.*;
+import javax.xml.parsers.*;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import org.w3c.dom.*;
+
+
+/**
+ *
+ * @author angbuiand
+ */
+public class Mavenproject1 {
+
+    private static String filePath = "productos.txt";
+    private static String format = "txt"; // Default format
+    private static final Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        while (true) {
+            mostrarMenu();
+            int opcion = scanner.nextInt();
+            scanner.nextLine(); // Limpiar buffer
+            switch (opcion) {
+                case 1:
+                    añadirProducto();
+                    break;
+                case 2:
+                    verProductos();
+                    break;
+                case 3:
+                    buscarProducto();
+                    break;
+                case 4:
+                    actualizarPrecio();
+                    break;
+                case 5:
+                    cambiarFormato();
+                    break;
+                case 6:
+                    System.out.println("Saliendo...");
+                    return;
+                default:
+                    System.out.println("Opción inválida.");
+            }
+        }
+    }
+
+    private static void mostrarMenu() {
+        System.out.println("\nMenú del Inventario:");
+        System.out.println("1. Añadir producto");
+        System.out.println("2. Ver todos los productos");
+        System.out.println("3. Buscar producto por ID");
+        System.out.println("4. Actualizar precio de un producto por ID");
+        System.out.println("5. Cambiar formato de archivo (TXT o XML)");
+        System.out.println("6. Salir");
+        System.out.print("Seleccione una opción: ");
+    }
+
+    private static void añadirProducto() {
+        System.out.print("Introduce el ID del producto: ");
+        int id = scanner.nextInt();
+        scanner.nextLine(); // Limpiar buffer
+        System.out.print("Introduce el nombre del producto: ");
+        String nombre = scanner.nextLine();
+        System.out.print("Introduce el precio del producto: ");
+        double precio = scanner.nextDouble();
+        System.out.print("Introduce la cantidad del producto: ");
+        int cantidad = scanner.nextInt();
+
+        Producto producto = new Producto(id, nombre, precio, cantidad);
+        if (format.equals("txt")) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
+                writer.write(producto.toString());
+                writer.newLine();
+                System.out.println("Producto añadido.");
+            } catch (IOException e) {
+                System.err.println("Error al añadir el producto: " + e.getMessage());
+            }
+        } else { // formato XML
+            try {
+                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+
+                DocumentBuilder builder = factory.newDocumentBuilder();
+                File xmlFile = new File(filePath);
+                Document doc;
+                if (xmlFile.exists()) {
+                    doc = builder.parse(xmlFile);
+                } else {
+                    doc = builder.newDocument();
+                    Element root = doc.createElement("productos");
+                    doc.appendChild(root);
+                }
+                Element nuevoProducto = doc.createElement("producto");
+                Element idElem = doc.createElement("id");
+                idElem.setTextContent(String.valueOf(id));
+                Element nombreElem = doc.createElement("nombre");
+                nombreElem.setTextContent(nombre);
+                Element precioElem = doc.createElement("precio");
+                precioElem.setTextContent(String.valueOf(precio));
+                Element cantidadElem = doc.createElement("cantidad");
+                cantidadElem.setTextContent(String.valueOf(cantidad));
+                nuevoProducto.appendChild(idElem);
+                nuevoProducto.appendChild(nombreElem);
+                nuevoProducto.appendChild(precioElem);
+                nuevoProducto.appendChild(cantidadElem);
+                doc.getDocumentElement().appendChild(nuevoProducto);
+
+                TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                Transformer transformer = transformerFactory.newTransformer();
+                transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+                DOMSource source = new DOMSource(doc);
+                StreamResult result = new StreamResult(new File(filePath));
+                transformer.transform(source, result);
+                System.out.println("Producto añadido en formato XML.");
+            } catch (Exception e) {
+                System.err.println("Error al añadir el producto en XML: " + e.getMessage());
+            }
+        }
+    }
+    
+    private static void verProductos() {
+        if (format.equals("txt")) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+                String linea;
+                System.out.println("\nLista de productos:");
+                while ((linea = reader.readLine()) != null) {
+                    Producto producto = Producto.fromString(linea);
+                    System.out.println(producto);
+                }
+            } catch (FileNotFoundException e) {
+                System.err.println("El archivo no se encontró: " + e.getMessage());
+            } catch (IOException e) {
+                System.err.println("Error al leer el archivo: " + e.getMessage());
+            }
+        } else { // formato XML
+            try {
+                File xmlFile = new File(filePath);
+                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder builder = factory.newDocumentBuilder();
+                Document doc = builder.parse(xmlFile);
+                doc.getDocumentElement().normalize();
+                NodeList listaProductos = doc.getElementsByTagName("producto");
+                System.out.println("\nLista de productos:");
+                for (int i = 0; i < listaProductos.getLength(); i++) {
+                    Node nodoProducto = listaProductos.item(i);
+                    if (nodoProducto.getNodeType() == Node.ELEMENT_NODE) {
+                        Element producto = (Element) nodoProducto;
+                        int id = Integer.parseInt(producto.getElementsByTagName("id").item(0).getTextContent());
+                        String nombre = producto.getElementsByTagName("nombre").item(0).getTextContent();
+                        double precio = Double.parseDouble(producto.getElementsByTagName("precio").item(0).getTextContent());
+                        int cantidad = Integer.parseInt(producto.getElementsByTagName("cantidad").item(0).getTextContent());
+                        System.out.println(id + ", " + nombre + ", " + precio + ", " + cantidad);
+                    }
+                }
+            } catch (Exception e) {
+                System.err.println("Error al leer el archivo XML: " + e.getMessage());
+            }
+        }
+    }
+
+
+    private static void buscarProducto() {
+        System.out.print("Introduce el ID del producto a buscar: ");
+        int idBuscado = scanner.nextInt();
+        if (format.equals("txt")) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+                String linea;
+                while ((linea = reader.readLine()) != null) {
+                    Producto producto = Producto.fromString(linea);
+                    if (producto.getId() == idBuscado) {
+                        System.out.println("Producto encontrado: " + producto);
+                        return;
+                    }
+                }
+                System.out.println("Producto no encontrado.");
+            } catch (IOException e) {
+                System.err.println("Error al buscar el producto: " + e.getMessage());
+            }
+        } else { // formato XML
+            try {
+                File xmlFile = new File(filePath);
+                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder builder = factory.newDocumentBuilder();
+                Document doc = builder.parse(xmlFile);
+                doc.getDocumentElement().normalize();
+                NodeList listaProductos = doc.getElementsByTagName("producto");
+                for (int i = 0; i < listaProductos.getLength(); i++) {
+                    Node nodoProducto = listaProductos.item(i);
+                    if (nodoProducto.getNodeType() == Node.ELEMENT_NODE) {
+                        Element producto = (Element) nodoProducto;
+                        int id = Integer.parseInt(producto.getElementsByTagName("id").item(0).getTextContent());
+                        if (id == idBuscado) {
+                            String nombre = producto.getElementsByTagName("nombre").item(0).getTextContent();
+                            double precio = Double.parseDouble(producto.getElementsByTagName("precio").item(0).getTextContent());
+                            int cantidad = Integer.parseInt(producto.getElementsByTagName("cantidad").item(0).getTextContent());
+                            System.out.println("Producto encontrado: " + id + ", " + nombre + ", " + precio + ", " + cantidad);
+                            return;
+                        }
+                    }
+                }
+                System.out.println("Producto no encontrado.");
+            } catch (Exception e) {
+                System.err.println("Error al buscar el producto en XML: " + e.getMessage());
+            }
+        }
+    }
+
+    private static void actualizarPrecio() {
+        System.out.print("Introduce el ID del producto cuyo precio deseas actualizar: ");
+        int idBuscado = scanner.nextInt();
+        System.out.print("Introduce el nuevo precio del producto: ");
+        double nuevoPrecio = scanner.nextDouble();
+
+        if (format.equals("txt")) {
+            ArrayList<Producto> productos = new ArrayList<>();
+            boolean encontrado = false;
+
+            try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+                String linea;
+                while ((linea = reader.readLine()) != null) {
+                    Producto producto = Producto.fromString(linea);
+                    if (producto.getId() == idBuscado) {
+                        producto.setPrecio(nuevoPrecio);
+                        encontrado = true;
+                    }
+                    productos.add(producto);
+                }
+            } catch (IOException e) {
+                System.err.println("Error al leer el archivo: " + e.getMessage());
+            }
+
+            if (encontrado) {
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+                    for (Producto producto : productos) {
+                        writer.write(producto.toString());
+                        writer.newLine();
+                    }
+                    System.out.println("Precio actualizado.");
+                } catch (IOException e) {
+                    System.err.println("Error al actualizar el archivo: " + e.getMessage());
+                }
+            } else {
+                System.out.println("Producto no encontrado.");
+            }
+        } else { // Formato XML
+            try {
+                File xmlFile = new File(filePath);
+                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder builder = factory.newDocumentBuilder();
+                Document doc = builder.parse(xmlFile);
+                doc.getDocumentElement().normalize();
+                NodeList listaProductos = doc.getElementsByTagName("producto");
+                boolean encontrado = false;
+
+                for (int i = 0; i < listaProductos.getLength(); i++) {
+                    Node nodoProducto = listaProductos.item(i);
+                    if (nodoProducto.getNodeType() == Node.ELEMENT_NODE) {
+                        Element producto = (Element) nodoProducto;
+                        int id = Integer.parseInt(producto.getElementsByTagName("id").item(0).getTextContent());
+                        if (id == idBuscado) {
+                            producto.getElementsByTagName("precio").item(0).setTextContent(String.valueOf(nuevoPrecio));
+                            encontrado = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (encontrado) {
+                    TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                    Transformer transformer = transformerFactory.newTransformer();
+                    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+                    DOMSource source = new DOMSource(doc);
+                    StreamResult result = new StreamResult(xmlFile);
+                    transformer.transform(source, result);
+                    System.out.println("Precio actualizado en formato XML.");
+                } else {
+                    System.out.println("Producto no encontrado.");
+                }
+            } catch (Exception e) {
+                System.err.println("Error al actualizar el precio en XML: " + e.getMessage());
+            }
+        }
+    }
+
+    private static void cambiarFormato() {
+        System.out.print("Seleccione el nuevo formato (txt/xml): ");
+        String nuevoFormato = scanner.nextLine();
+        if (nuevoFormato.equals("txt") || nuevoFormato.equals("xml")) {
+            format = nuevoFormato;
+            filePath = "productos." + format;
+            System.out.println("Formato cambiado a " + format + ".");
+        } else {
+            System.out.println("Formato inválido.");
+        }
+    }
+}
