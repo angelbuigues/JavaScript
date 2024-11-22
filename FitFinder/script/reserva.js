@@ -2,8 +2,8 @@
 // Mostrar los gimnasios
 const gymInfo = document.querySelector('#gym-list');
 const gyms = JSON.parse(localStorage.getItem('lista-gyms'));
-
 let arrayGyms = JSON.parse(localStorage.getItem('arrayGyms'));
+
 
 if (arrayGyms.length === 0) {
     const gymDiv = document.createElement('div');
@@ -26,9 +26,7 @@ else {
                 gymDiv.innerHTML = `
                 <h3>${gym.name}</h3>
                 <img src="./img/${gym.name}.png" alt="FitFinder Logo">
-                <p>Dirección: ${gym.address}, ${gym.city}</p>
-                <p>Calificación: ${gym.rating} ⭐</p>
-                <p>Servicios: ${gym.services.join(', ')}</p>
+                <br>
                 <button id="eliminar-btn" data-name="${gym.name}">Eliminar reserva</button>
                 `;
                 gymInfo.appendChild(gymDiv);

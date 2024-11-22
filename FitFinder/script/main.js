@@ -4,6 +4,11 @@ console.log('JS Cargado');
 console.log(gyms);
 
 localStorage.setItem("lista-gyms", JSON.stringify(gyms));
+if(JSON.parse(localStorage.getItem('arrayGyms')) === null || JSON.parse(localStorage.getItem('arrayGyms')) === undefined){
+    let arrayGyms = [];
+    localStorage.setItem("arrayGyms", JSON.stringify(arrayGyms));
+}
+
 const gymList = document.querySelector('#gym-list');
 
 
