@@ -1,6 +1,6 @@
 [
     {
-        "name": "FitLife Gym",
+        "name": "FitLife_Gym",
         "address": "123 Wellness Street",
         "city": "Ciudad de México",
         "services": [
@@ -13,7 +13,7 @@
         "rating": 4.5
     },
     {
-        "name": "PowerHouse Fitness",
+        "name": "PowerHouse_Fitness",
         "address": "456 Strength Ave",
         "city": "Guadalajara",
         "services": [
@@ -26,7 +26,7 @@
         "rating": 4.7
     },
     {
-        "name": "Elite Sports Club",
+        "name": "Elite_Sports",
         "address": "789 Muscle Blvd",
         "city": "Monterrey",
         "services": [
@@ -39,7 +39,7 @@
         "rating": 4.9
     },
     {
-        "name": "Wellness Hub",
+        "name": "Wellness_Hub",
         "address": "101 Health Dr",
         "city": "Puebla",
         "services": [
@@ -52,7 +52,7 @@
         "rating": 4.3
     },
     {
-        "name": "Urban Fitness",
+        "name": "Fitness_Center",
         "address": "202 Fit Lane",
         "city": "Tijuana",
         "services": [
@@ -65,7 +65,7 @@
         "rating": 4.2
     },
     {
-        "name": "Total Fitness",
+        "name": "Total_Fitness",
         "address": "303 Strength St",
         "city": "Querétaro",
         "services": [
