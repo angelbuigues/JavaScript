@@ -8,10 +8,14 @@ let arrayGyms = JSON.parse(localStorage.getItem('arrayGyms'));
 if (arrayGyms.length === 0) {
     const gymDiv = document.createElement('div');
     gymDiv.className = 'gym';
-    gymDiv.innerHTML = `
-        <h3>Aun no has reservado un gimnasio</h3>
-        <button id="voler-btn">Atras</button>
-        `;
+    const heading = document.createElement('h3');
+    heading.textContent = 'Aun no has reservado un gimnasio';
+    gymDiv.appendChild(heading);
+
+    const button = document.createElement('button');
+    button.id = 'voler-btn';
+    button.textContent = 'Atras';
+    gymDiv.appendChild(button);
     gymInfo.appendChild(gymDiv);
     document.querySelector('#voler-btn').addEventListener('click', () => {
         window.location.href = './index.html';
@@ -23,12 +27,20 @@ else {
             if (gym.name === gymName) {
                 const gymDiv = document.createElement('div');
                 gymDiv.className = 'gym';
-                gymDiv.innerHTML = `
-                <h3>${gym.name}</h3>
-                <img src="./img/${gym.name}.png" alt="FitFinder Logo">
-                <br>
-                <button id="eliminar-btn" data-name="${gym.name}">Eliminar reserva</button>
-                `;
+                const heading = document.createElement('h3');
+                heading.textContent = gym.name;
+                gymDiv.appendChild(heading);
+
+                const image = document.createElement('img');
+                image.src = `./img/${gym.name}.png`;
+                image.alt = 'FitFinder Logo';
+                gymDiv.appendChild(image);
+
+                const button = document.createElement('button');
+                button.id = 'eliminar-btn';
+                button.textContent = 'Eliminar reserva';
+                button.setAttribute('data-name', gym.name);
+                gymDiv.appendChild(button);
                 gymInfo.appendChild(gymDiv);
             }
         })

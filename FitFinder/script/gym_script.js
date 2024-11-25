@@ -8,10 +8,14 @@ const arrayGyms = JSON.parse(localStorage.getItem('arrayGyms'));
 if (nameGym === null) {
     const gymDiv = document.createElement('div');
     gymDiv.className = 'gym';
-    gymDiv.innerHTML = `
-        <h3>Aun no has seleccionado un gimnasio</h3>
-        <button id="voler-btn">Atras</button>
-        `;
+    const h3 = document.createElement('h3');
+    h3.textContent = 'Aun no has seleccionado un gimnasio';
+    gymDiv.appendChild(h3);
+
+    const button = document.createElement('button');
+    button.id = 'voler-btn';
+    button.textContent = 'Atras';
+    gymDiv.appendChild(button);
     gymInfo.appendChild(gymDiv);
     document.querySelector('#voler-btn').addEventListener('click', () => {
         window.location.href = './index.html';
@@ -22,14 +26,31 @@ else {
         if (gym.name === nameGym) {
             const gymDiv = document.createElement('div');
             gymDiv.className = 'gym';
-            gymDiv.innerHTML = `
-            <h3>${gym.name}</h3>
-            <img src="./img/${gym.name}.png" alt="FitFinder Logo">
-            <p>Dirección: ${gym.address}, ${gym.city}</p>
-            <p>Calificación: ${gym.rating} ⭐</p>
-            <p>Servicios: ${gym.services.join(', ')}</p>
-            <button id="reserve-btn">Reservar</button>
-            `;
+            const h3 = document.createElement('h3');
+            h3.textContent = gym.name;
+            gymDiv.appendChild(h3);
+            
+            const img = document.createElement('img');
+            img.src = `./img/${gym.name}.png`;
+            img.alt = 'FitFinder Logo';
+            gymDiv.appendChild(img);
+            
+            const addressP = document.createElement('p');
+            addressP.textContent = `Dirección: ${gym.address}, ${gym.city}`;
+            gymDiv.appendChild(addressP);
+            
+            const ratingP = document.createElement('p');
+            ratingP.textContent = `Calificación: ${gym.rating} ⭐`;
+            gymDiv.appendChild(ratingP);
+            
+            const servicesP = document.createElement('p');
+            servicesP.textContent = `Servicios: ${gym.services.join(', ')}`;
+            gymDiv.appendChild(servicesP);
+            
+            const button = document.createElement('button');
+            button.id = 'reserve-btn';
+            button.textContent = 'Reservar';
+            gymDiv.appendChild(button);
             gymInfo.appendChild(gymDiv);
         }
 

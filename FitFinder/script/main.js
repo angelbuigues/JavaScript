@@ -15,10 +15,13 @@ const gymList = document.querySelector('#gym-list');
 gyms.forEach(gym => {
     const gymDiv = document.createElement('div');
     gymDiv.className = 'gym';
-    gymDiv.innerHTML = `
-        <h3>${gym.name}</h3>
-        <img src="./img/${gym.name}.png" alt="FitFinder Logo">
-        `;
+    const gymTitle = document.createElement('h3');
+    gymTitle.textContent = gym.name;
+    const gymImg = document.createElement('img');
+    gymImg.src = `./img/${gym.name}.png`;
+    gymImg.alt = 'FitFinder Logo';
+    gymDiv.appendChild(gymTitle);
+    gymDiv.appendChild(gymImg);
     gymList.appendChild(gymDiv);
 });
 
