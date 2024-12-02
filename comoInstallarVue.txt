@@ -1,1 +1,3 @@
-npm init vue@latest
+set PATH=C:\node;%PATH%
+npm init vue@latest       -> para instalar
+npm run dev               -> para arrancar-lo
