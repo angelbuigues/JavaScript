@@ -2,6 +2,11 @@
 import titulo from "./components/Titulo.vue"
 import subtitulo from "./components/Subtitulo.vue"
 import today from "./components/Today.vue"
+import scheduled from "./components/Scheduled.vue"
+import all from "./components/All.vue"
+import overdue from "./components/Overdue.vue"
+import titleTaskToday from "./components/TitleTaskToday.vue"
+import menuu from "./components/Menu.vue"
 console.log("perro");
 export default {
   data() {
@@ -12,7 +17,12 @@ export default {
   components: {
     titulo,
     subtitulo,
-    today
+    today,
+    scheduled,
+    all,
+    overdue,
+    titleTaskToday,
+    menuu
   }
 }
 
@@ -22,10 +32,19 @@ export default {
   <br>
   <subtitulo />
   <br>
-  <today />
-  <today />
-  <today />
-  <today />
+  <today /> 
+  <scheduled />
+  <all />
+  <overdue />
+  <titleTaskToday />
+  <br>
+  <menuu />
+  <br>
+  <menuu />
+  <br>
+  <menuu />
+  <br>
+  <menuu />
 </template>
 <style>
 

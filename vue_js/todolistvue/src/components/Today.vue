@@ -2,42 +2,55 @@
 export default {
     data() {
         return {
-            text: "hola",
-            img: "https://img.freepik.com/foto-gratis/imagen-campamento-espacial_23-2148751306.jpg?w=2000",
-            num: 0
+            text: "Today",
+            img: "⏰",
+            num: 6
         }
     }
 }
 
 </script>
 <template>
-    <div class="today">
-        <img :src="img" alt="">
-        <p class="text">{{ text }}</p>
-        <p class="num">{{ num }}</p>
+    <div class="container">
+        <div class="icon">{{ img }}</div>
+        <div class="text">
+            <p>{{ text }}</p>
+            <p class="number">{{ num }}</p>
+        </div>
     </div>
+
 </template>
 <style>
-div.today {
-    color: red;
-    background-color: green;
-    border-radius: 10px;
-    font-size: 3em;
+
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    height: 100px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: #fff;
+    background-color: blue;
 }
-div.today:hover {
+
+.icon {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.text p {
+    margin: 4px 0;
+}
+
+.number {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.container:hover {
     color: green;
     background-color: red;
 }
-div.today img {
-    border-radius: 10px;
-    width: 20%;
-    height: 20%;
-}
-
-div.today p{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-}
-
-
 </style>

@@ -2,7 +2,7 @@
 export default {
     data() {
         return {
-            h1Text: "hola",
+            h1Text: "hola,",
         }
     }
 }
