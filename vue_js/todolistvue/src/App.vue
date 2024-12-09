@@ -7,6 +7,7 @@ import all from "./components/All.vue"
 import overdue from "./components/Overdue.vue"
 import titleTaskToday from "./components/TitleTaskToday.vue"
 import menuu from "./components/Menu.vue"
+import contador from "./components/Contador.vue"
 console.log("perro");
 export default {
   data() {
@@ -22,7 +23,8 @@ export default {
     all,
     overdue,
     titleTaskToday,
-    menuu
+    menuu,
+    contador
   }
 }
 
@@ -31,12 +33,14 @@ export default {
   <titulo />
   <br>
   <subtitulo />
+  
   <br>
   <today /> 
   <scheduled />
   <all />
   <overdue />
   <titleTaskToday />
+  
   <br>
   <menuu />
   <br>
@@ -45,6 +49,8 @@ export default {
   <menuu />
   <br>
   <menuu />
+  <br>
+  <contador />
 </template>
 <style>
 

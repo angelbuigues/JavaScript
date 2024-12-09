@@ -31,7 +31,7 @@ match opcion:
     case 2:
         lado=int(input("Introduce el base: "))
         altura=int(input("Introduce la altura:  "))
-        print("El área del rectangulo es: ",rectanguel(lado,altura))
+        print("El área del rectangulo es: ",ractangel(lado,altura))
     case 3:
         lado=int(input("Introduce la longitud: "))
         altura=int(input("Introduce el ancho: "))
