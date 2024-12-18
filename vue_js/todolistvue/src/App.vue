@@ -8,6 +8,7 @@ import overdue from "./components/Overdue.vue"
 import titleTaskToday from "./components/TitleTaskToday.vue"
 import menuu from "./components/Menu.vue"
 import contador from "./components/Contador.vue"
+import miboton from "./components/Miboton.vue"
 console.log("perro");
 export default {
   data() {
@@ -24,34 +25,30 @@ export default {
     overdue,
     titleTaskToday,
     menuu,
+    miboton,
     contador
-  }
+  },
+  methods: {
+    manejarEvento(mensaje) {
+      alert(mensaje); // Muestra "¡Botón pulsado!"
+    },
+  },
 }
 
 </script>
 <template>
-  <titulo />
-  <br>
-  <subtitulo />
-  
-  <br>
-  <today /> 
-  <scheduled />
-  <all />
-  <overdue />
-  <titleTaskToday />
-  
-  <br>
-  <menuu />
-  <br>
-  <menuu />
-  <br>
-  <menuu />
-  <br>
-  <menuu />
-  <br>
+  <titulo  h1Text="paco" clase="rojo" />
+
+  <miboton @eventoClic="manejarEvento" text="hola" clase="rojo" />
+  <miboton text="que" clase="verde" />
+  <miboton text="tal" clase="azul" />
+
   <contador />
 </template>
 <style>
-
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 150px);
+  grid-gap: 15px;
+}
 </style>

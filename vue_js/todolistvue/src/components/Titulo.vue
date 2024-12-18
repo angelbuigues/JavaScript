@@ -1,15 +1,19 @@
 <script>
 export default {
+    props: [
+        'h1Text',
+        'clase'
+    ],
     data() {
         return {
-            h1Text: "hola,",
+            // h1Text: "hola,",
         }
     }
 }
 
 </script>
 <template>
-    <h1>{{ h1Text }}</h1>
+    <h1 :class="clase">{{ h1Text }}</h1>
 </template>
 <style>
 h1 {

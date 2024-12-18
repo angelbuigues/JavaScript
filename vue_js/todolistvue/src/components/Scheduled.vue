@@ -11,11 +11,13 @@ export default {
 
 </script>
 <template>
-    <div class="containerScheduled">
-        <div class="icon">{{ img }}</div>
-        <div class="text">
-            <p>{{ text }}</p>
-            <p class="number">{{ num }}</p>
+    <div class="grid-container">
+        <div class="container">
+            <div class="icon">{{ img }}</div>
+            <div class="text">
+                <p>{{ text }}</p>
+                <p class="number">{{ num }}</p>
+            </div>
         </div>
     </div>
 
