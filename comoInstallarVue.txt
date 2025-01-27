@@ -1,3 +1,5 @@
 set PATH=C:\node;%PATH%
 npm init vue@latest       -> para instalar
 npm run dev               -> para arrancar-lo
+tree /F                   -> para ver la estructura de carpetas
+ctrl + d                  -> para reseleccionar la misma palabra
